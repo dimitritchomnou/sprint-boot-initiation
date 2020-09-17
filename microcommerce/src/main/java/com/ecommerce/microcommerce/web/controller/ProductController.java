@@ -5,6 +5,8 @@ import com.ecommerce.microcommerce.web.exceptions.ProduitIntrouvableException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -14,7 +16,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
-
+//Description pour l'API
+@Api(description = "API pour les opérations CRUD sur les produits.")
 @RestController
 public class ProductController {
     @Autowired
@@ -22,12 +25,6 @@ public class ProductController {
 
 
     @RequestMapping(value = "/Produits", method = RequestMethod.GET)
-    //@GetMapping(value = "/Produits")
-
-    /*public ArrayList<Product> listeProduits(){
-        //return "Un exemple de produit";
-        return productDao.findAll();
-    }*/
     //Utilisation de filtre afin de traiter le cachage de propriété cas par cas
     public MappingJacksonValue listeProduits(){
         Iterable<Product> produits = productDao.findAll();
@@ -40,6 +37,7 @@ public class ProductController {
     }
 
     //@RequestMapping(value = "/Produits/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "Récupère un produit grâce à son ID à condition que celui-ci soit en stock!")
     @GetMapping(value = "/Produits/{id}")
     public Product afficheUnProduit(@PathVariable int id) {
         //Product product = new Product(id, "Aspirateur", 100);
@@ -64,6 +62,7 @@ public class ProductController {
         //Utilisation d'une Query
         return productDao.findProductByName(recherche);
     }
+
     //@Valid pour la validation des champs
     @PostMapping(value = "/Produits")
     public ResponseEntity<Void> ajouterProduit(@Valid @RequestBody Product product){
