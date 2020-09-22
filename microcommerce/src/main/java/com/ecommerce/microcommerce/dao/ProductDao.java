@@ -23,4 +23,11 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 
     @Query("select p from Product p where p.nom like CONCAT('%',:nameProduct,'%')")
     ArrayList<Product> findProductByName(@Param("nameProduct") String nameProduct);
+
+    /*@Query("select p.prix from Product p where p.id = :idProduit")
+    Integer prixProduit (@Param("idProduit") Integer id);
+
+    @Query("select p.prixAchat from Product p where p.id = :idProduit")
+    Integer prixAchatProduit (@Param("idProduit") Integer id);*/
+
 }

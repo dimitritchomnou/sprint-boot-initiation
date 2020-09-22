@@ -13,7 +13,7 @@ import javax.validation.constraints.Min;
 //@JsonIgnoreProperties(value = {"prixAchat", "id"})//plusieurs propriété à cacher
 //@JsonFilter("monFiltreDynamique")//filtrage de propriété cas par cas
 
-@Entity
+@Entity//Annotation pour Mapping
 public class Product {
     @Id
     @GeneratedValue
