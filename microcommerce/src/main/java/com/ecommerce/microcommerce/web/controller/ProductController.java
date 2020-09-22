@@ -101,9 +101,16 @@ public class ProductController {
     public HashMap<Product, Integer> calculMargeProduit(){
         List<Product> productList = productDao.findAll();
         HashMap<Product, Integer> produits = new HashMap<>();
-        for(int i = 1; i <= productList.size(); i++){
-            produits.put(productDao.findById(i), productDao.findById(i).getPrix() - productDao.findById(i).getPrixAchat());
-        }
+        //Use Java 8 syntaxe
+        productList.forEach(c -> {
+            produits.put(c, (c.getPrix() - c.getPrixAchat()));
+        });
+
+        //Other syntax
+        /*for (Product prod: productList) {
+            produits.put(prod, prod.getPrix() - prod.getPrixAchat());
+        }*/
+        
         return produits;
     }
 }
