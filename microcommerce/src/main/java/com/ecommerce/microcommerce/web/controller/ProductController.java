@@ -110,7 +110,13 @@ public class ProductController {
         /*for (Product prod: productList) {
             produits.put(prod, prod.getPrix() - prod.getPrixAchat());
         }*/
-        
+
         return produits;
+    }
+
+    //Tri par ordre alphabétique
+    @GetMapping(value = "tri/produits/")
+    public ArrayList<Product> triProduitOrdreAlphabetique(){
+       return productDao.poductTriASC();
     }
 }

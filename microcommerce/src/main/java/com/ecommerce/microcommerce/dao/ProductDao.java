@@ -30,4 +30,7 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
     @Query("select p.prixAchat from Product p where p.id = :idProduit")
     Integer prixAchatProduit (@Param("idProduit") Integer id);*/
 
+    //Query tri par ordre alphabétique
+    @Query("select p from Product p order by p.nom asc")
+    ArrayList<Product> poductTriASC();
 }
