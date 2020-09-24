@@ -1,12 +1,14 @@
 package com.ecommerce.microcommerce.web.controller;
 import com.ecommerce.microcommerce.model.Product;
 import com.ecommerce.microcommerce.dao.ProductDao;
+import com.ecommerce.microcommerce.web.exceptions.ProduitGratuitException;
 import com.ecommerce.microcommerce.web.exceptions.ProduitIntrouvableException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -71,9 +73,13 @@ public class ProductController {
     @PostMapping(value = "/Produits")
     public ResponseEntity<Void> ajouterProduit(@Valid @RequestBody Product product){
         Product productAdded = productDao.save(product);
+        //Add exception
+        if (productAdded.getPrix() == 0)
+            throw new ProduitGratuitException("Le prix ne doit pas être null");
 
         if (productAdded == null)
             return ResponseEntity.noContent().build();
+
 
         //Construction de l'url d'ajout de produit
         URI location = ServletUriComponentsBuilder
